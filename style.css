@@ -85,11 +85,33 @@ h2 {
 }
 
 .button {
-  --color-bg: hsl(208, 72%, 39%);
+  --color: hsl(208, 72%, 39%);
   display: inline-block;
   cursor: pointer;
   text-decoration: none;
-  border: 2px solid var(--color-bg);
+  border: 2px solid var(--color);
   color: bg; 
-  padding: .5em .1em
+  padding: .5em .1em;
+  border-radius: .25em;
+  
+  position: relitave;
+  isolation: isloate;  
+}
+
+.button::after {
+  content : '';
+  position: absolute;
+  z-index: -1;
+  background: var(--color);
+  inset: 0; 
+  
+  scale: 0 1;
+  transform-origin: right;
+  transition: scale 450ms;
+}
+
+.button;hover::after,
+.button:focus-visible::after {
+  transform-origin: left;
+  scale: 1 1;
 }
