@@ -14,3 +14,5 @@ setInterval(() => {
   document.getElementById("points").innerHTML = player.points.toFixed(2)
   document.getElementById("pps").innerHTML = player.pointspersec.toFixed(2)
 },1000/100)
+// am bacc
+//what you do?
