@@ -10,6 +10,7 @@ setInterval(() => {
   lasttime = Date.now()
   document.getElementById("deltatime").innerHTML = Math.round(1/deltatime)
   player.points += deltatime * player.pointspersec
-  player.pointspersec += deltatime * 1
+  player.pointspersec += deltatime * (0.01+(1.01**((Math.log10(player.points < 1 ? 1 : player.points))-1)))
   document.getElementById("points").innerHTML = player.points.toFixed(2)
+  document.getElementById("pps").innerHTML = player.pointspersec.toFixed(2)
 },1000/100)
