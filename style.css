@@ -110,7 +110,7 @@ h2 {
   transition: scale 450ms;
 }
 
-.button;hover::after,
+.button:hover::after,
 .button:focus-visible::after {
   transform-origin: left;
   scale: 1 1;
