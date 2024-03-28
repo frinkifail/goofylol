@@ -83,3 +83,13 @@ h2 {
 .fileopener:hover {
   border-bottom:3px solid var(--color-secondary);
 }
+
+.button {
+  --color-bg: hsl(208, 72%, 39%);
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none;
+  border: 2px solid var(--color-bg);
+  color: bg; 
+  padding: .5em .1em
+}
