@@ -1,7 +1,7 @@
 
 
 body {
-  font-family: monospace;
+  font-family: 'SF Mono' 'Roboto Mono' 'Oxygen Mono' monospace;
   background-color: var(--color-bg);
 }
 
