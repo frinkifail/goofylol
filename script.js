@@ -13,34 +13,52 @@ var player = {
 }
 
 //Teste's Save and Load Functions :3
-function Save(){localStorage.setItem("goofyahhgame-save",btoa(JSON.stringify(player)));}
-function Load(){
-if (localStorage.getItem("goofyahhgame-save") != null) {
-var data = JSON.parse(atob(localStorage.getItem("goofyahhgame-save")))
-for (const i in data) player[i] = data[i]}}
+function Save() {
+  localStorage.setItem("goofyahhgame-save", btoa(JSON.stringify(player)));
+}
+function Load() {
+  if (localStorage.getItem("goofyahhgame-save") != null) {
+    const data = JSON.parse(atob(localStorage.getItem("goofyahhgame-save")))
+    for (const i in data) player[i] = data[i] // cant we do player = data?
+  }
+}
+
 Load()
 
-const goofypillsbutton = document.querySelector("goofypills");
-goofypillsbutton.addEventListener("click", (event) => {BuyGoof(1,false)});
+function assignOnclick() { // so we dont have global variables cluttering everything :3
+  const goofypillsbutton = document.getElementById("goofypills");
+  goofypillsbutton.onclick = () => BuyGoof(1,false)
+
+  const longergoofypillsbutton = document.getElementById("longergoofypills");
+  longergoofypillsbutton.onclick = () => BuyGoof(2,false)
+}
+assignOnclick();
+
+
 
 //shop stuff
-function BuyGoof(x,a){
-  if (x == 1 || a){
-    var price = ((player.goofypills**1.25)*15)
+/**
+ * x = item id
+ * a = update only
+*/
+function BuyGoof(x, a) { // i hate messy code for some reason
+  if (x == 1 || a) {
+    // TODO: maybe reformat this in the future
+    var price = ((player.goofypills ** 1.25) * 15)
     document.getElementById("gpcost").innerHTML = format(price)
     document.getElementById("gpamount").innerHTML = player.goofypills
     if (player.points >= price && !a){
       player.points -= price
-      player.goofypills+=1
+      player.goofypills += 1
     }
   }
-  if (x == 2 || a){
-    var price = (((player.longgoofypills+1)**1.35)*1000)
+  if (x == 2 || a) {
+    var price = (((player.longgoofypills + 1) ** 1.35) * 1000)
     document.getElementById("lgpcost").innerHTML = format(price)
     document.getElementById("lgpamount").innerHTML = player.longgoofypills
     if (player.points >= price && !a){
       player.points -= price
-      player.longgoofypills+=1
+      player.longgoofypills += 1
     }
   }
 }
