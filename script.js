@@ -10,28 +10,28 @@ var player = {
 }
 function format(x){
   if (0.1 > x){
-    return "1/"+(x**-1).tofixed(2)
+    return "1/"+(x**-1).toFixed(2)
   }
-  if (0.1 < x || x < 1000){
-    return x.tofixed(2)
+  if (0.1 <= x || x < 1000){
+    return x.toFixed(2)
   }
-  if (1000 >= x || x >= 100000){
+  if (1000 <= x || x < 100000){
   return x.toFixed(1)
   }
-  if (100000 >= x || x >= 1000000){
+  if (100000 <= x || x < 1000000){
     return x.toFixed(0)
   }
-  if (x > 1000000){
+  if (x >= 1000000){
     let log10x = Math.log10(x) 
     let xoverl10x = x/(10**log10x)
-    if (xoverl10x >= 10){return (xoverl10x/10).toFixed(2)+"e"+(log10x+1).toFixed(0)}
-    else {return xoverl10x.toFixed(2)+"e"+log10x.toFixed(0)}
+    if (xoverl10x >= 10){return (String(xoverl10x/10).toFixed(2)+"e"+String(log10x+1).toFixed(0))}
+    else {return (String(xoverl10x).toFixed(2)+"e"+String(log10x).toFixed(0))}
   }
 }
 function BuyGoof(x,a){
   if (x == 1 || a){
-    var price = ((player.goofypills**1.25)*15).toFixed(1)
-    document.getElementById("gpcost").innerHTML = price
+    var price = ((player.goofypills**1.25)*15)
+    document.getElementById("gpcost").innerHTML = format(price)
     document.getElementById("gpamount").innerHTML = player.goofypills
     if (player.points >= price && !a){
       player.points -= price
@@ -48,8 +48,8 @@ setInterval(() => {
   player.points += deltatime * (player.pointspersec + player.goofypills)
   player.pointspersec += deltatime * ((((1.0001**((Math.log10(player.points < 1 ? 1 : player.points))-1))/25) * 0))
   let pntsps = (player.pointspersec + player.goofypills)
-  document.getElementById("points").innerHTML = player.points.toFixed(2)
-  document.getElementById("pps").innerHTML = pntsps.toFixed(2)
+  document.getElementById("points").innerHTML = format(player.points)
+  document.getElementById("pps").innerHTML = format(pntsps)
   BuyGoof(1,true)
 },1000/100)
 // am bacc
