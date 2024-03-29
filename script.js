@@ -12,6 +12,7 @@ function BuyGoof(x,a){
   if (x == 1 || a){
     var price = ((player.goofypills**1.25)*15).toFixed(1)
     document.getElementById("gpcost").innerHTML = price
+    document.getElementById("gpamount").innerHTML = player.goofypills
     if (player.points >= price && !a){
       player.points -= price
       player.goofypills+=1
