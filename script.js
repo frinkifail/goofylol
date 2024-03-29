@@ -1,6 +1,7 @@
 var deltatime = 0
 var lasttime = 0
 var player = {
+  lastTick: Date.now(),
   points: 0,
   pointspersec: 0,
   goofypills: 1,
@@ -12,20 +13,24 @@ function format(x){
   if (0.1 > x){
     return "1/"+(x**-1).toFixed(2)
   }
-  if (0.1 <= x || x < 1000){
+  else if(0.1 <= x || x < 1000){
     return x.toFixed(2)
   }
-  if (1000 <= x || x < 100000){
-  return x.toFixed(1)
+  else if (x >= 1000 || x < 100000){
+    return x.toFixed(1)
   }
-  if (100000 <= x || x < 1000000){
+  else if (x >= 100000 || x < 1000000){
     return x.toFixed(0)
   }
-  if (x >= 1000000){
-    let log10x = Math.log10(x) 
+  else if (x >= 1000000){
+    let log10x = Math.floor(Math.log10(x))
     let xoverl10x = x/(10**log10x)
-    if (xoverl10x >= 10){return (String(xoverl10x/10).toFixed(2)+"e"+String(log10x+1).toFixed(0))}
-    else {return (String(xoverl10x).toFixed(2)+"e"+String(log10x).toFixed(0))}
+    if (xoverl10x >= 10){
+      return ((xoverl10x/10).toFixed(2)+"e"+((log10x+1)))
+    }
+    else {
+      return ((xoverl10x).toFixed(2)+"e"+((log10x)))
+    }
   }
 }
 function BuyGoof(x,a){
@@ -40,10 +45,10 @@ function BuyGoof(x,a){
   }
 }
 
-lasttime = Date.now()
+player.lastTick = Date.now()
 setInterval(() => {
-  deltatime = (Date.now() - lasttime)/1000
-  lasttime = Date.now()
+  deltatime = (Date.now() - player.lastTick)/1000
+  player.lastTick = Date.now()
   document.getElementById("deltatime").innerHTML = Math.round(1/deltatime)
   player.points += deltatime * (player.pointspersec + player.goofypills)
   player.pointspersec += deltatime * ((((1.0001**((Math.log10(player.points < 1 ? 1 : player.points))-1))/25) * 0))
