@@ -9,11 +9,15 @@ var player = {
   susgoofygp: 0,
   silliness: 0
 }
+
+//Teste's Save and Load Functions :3
 function Save(){localStorage.setItem("goofyahhgame-save",btoa(JSON.stringify(player)));}
 function Load(){
 if (localStorage.getItem("goofyahhgame-save") != null) {
-var data = JSON.parse(atob(localStorage.getItem("catgame-save")))
-for (const i in data) player[i] = new data[i]}}
+var data = JSON.parse(atob(localStorage.getItem("goofyahhgame-save")))
+for (const i in data) player[i] = data[i]}}
+Load()
+
 function format(x){
   if (0.1 > x){
     return "1/"+(x**-1).toFixed(2)
@@ -59,6 +63,7 @@ function BuyGoof(x,a){
   }
 }
 
+var timesincelastsave = 0
 player.lastTick = Date.now()
 setInterval(() => {
   deltatime = (Date.now() - player.lastTick)/1000
@@ -66,11 +71,13 @@ setInterval(() => {
   document.getElementById("deltatime").innerHTML = Math.round(1/deltatime)
   player.points += deltatime * (player.pointspersec + player.goofypills)
   let bonuspps = (((1.0001**((Math.log10(player.points < 1 ? 1 : player.points))-1))/25) * 0)
-  player.pointspersec += deltatime * (bonuspps + player.longgoofypills)
+  player.pointspersec += deltatime * (bonuspps + (player.longgoofypills/45))
   let pntsps = (player.pointspersec + player.goofypills)
   document.getElementById("points").innerHTML = format(player.points)
   document.getElementById("pps").innerHTML = format(pntsps)
   BuyGoof(1,true)
+  timesincelastsave += deltatime
+  if (timesincelastsave >= 20){Save(); timesincelastsave = 0}
 },1000/100)
 // am bacc
 //what you do?
