@@ -9,6 +9,11 @@ var player = {
   susgoofygp: 0,
   silliness: 0
 }
+function Save(){localStorage.setItem("goofyahhgame-save",btoa(JSON.stringify(player)));}
+function Load(){
+if (localStorage.getItem("goofyahhgame-save") != null) {
+var data = JSON.parse(atob(localStorage.getItem("catgame-save")))
+for (const i in data) player[i] = new data[i]}}
 function format(x){
   if (0.1 > x){
     return "1/"+(x**-1).toFixed(2)
@@ -43,11 +48,13 @@ function BuyGoof(x,a){
       player.goofypills+=1
     }
   }
-  if (x == 2){
+  if (x == 2 || a){
     var price = (((player.longgoofypills+1)**1.35)*1000)
+    document.getElementById("lgpcost").innerHTML = format(price)
+    document.getElementById("lgpamount").innerHTML = player.longgoofypills
     if (player.points >= price && !a){
       player.points -= price
-      player.goofypills+=1
+      player.longgoofypills+=1
     }
   }
 }
@@ -58,7 +65,8 @@ setInterval(() => {
   player.lastTick = Date.now()
   document.getElementById("deltatime").innerHTML = Math.round(1/deltatime)
   player.points += deltatime * (player.pointspersec + player.goofypills)
-  player.pointspersec += deltatime * ((((1.0001**((Math.log10(player.points < 1 ? 1 : player.points))-1))/25) * 0))
+  let bonuspps = (((1.0001**((Math.log10(player.points < 1 ? 1 : player.points))-1))/25) * 0)
+  player.pointspersec += deltatime * (bonuspps + player.longgoofypills)
   let pntsps = (player.pointspersec + player.goofypills)
   document.getElementById("points").innerHTML = format(player.points)
   document.getElementById("pps").innerHTML = format(pntsps)
