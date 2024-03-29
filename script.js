@@ -36,9 +36,22 @@ function assignOnclick() {
   
   const susgoofygreenpowderbutton = document.getElementById("susgoofygreenpowder");
   susgoofygreenpowderbutton.onclick = () => BuyGoof(3, false);
+  
+  const tabgoof = document.getElementById("goofbutton");
+  
+  const tabsilly = document.getElementById("sillybutton");
 }
 
 assignOnclick();
+
+function SetTab(tabId){
+  if (tabId == 0){
+    document.getElementById("gooftab").style.display = "inline";
+  } else {document.getElementById("gooftab").style.display = "none";}
+  if (tabId == 1){
+    document.getElementById("void").style.display = "inline";
+  }
+}
 
 // shop stuff
 /**

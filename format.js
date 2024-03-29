@@ -1,5 +1,7 @@
 export function format(x){
-  if (x < 0.0001)
+  if (x < 0.0000000001){
+    return "0"
+  }
   if (x < 0.1){
     return "1/"+(x**-1).toFixed(2)
   }
