@@ -1,5 +1,5 @@
 :root {
-/*  put css vars here  */
+  /*  put css vars here  */
   --color-bg: #1b1b1b;
   --color-fg: #fefefe;
   --accent: aquamarine;
@@ -7,7 +7,7 @@
 }
 
 body {
-  font-family: 'SF Mono', 'Roboto Mono', 'Oxygen Mono', monospace;
+  font-family: "SF Mono", "Space Mono", "Roboto Mono", "Oxygen Mono", monospace;
   background-color: var(--color-bg);
   color: var(--color-fg);
 }
@@ -28,7 +28,7 @@ body {
 
 /* Very light scaling for our illustration */
 .title {
-  color: #2800FF;
+  color: #2800ff;
   font-family: monospace;
   font-style: normal;
   font-weight: bold;
@@ -54,7 +54,7 @@ button,
 input {
   font-family: inherit;
   font-size: 100%;
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid #000000;
   box-sizing: border-box;
   border-radius: 4px;
@@ -82,13 +82,13 @@ h2 {
 
 /* Links that open files in the editor */
 .fileopener {
-  cursor:pointer;
-  font-weight:bold;
-  border-bottom:3px solid var(--color-primary);
+  cursor: pointer;
+  font-weight: bold;
+  border-bottom: 3px solid var(--color-primary);
   color: var(--color-secondary);
 }
 .fileopener:hover {
-  border-bottom:3px solid var(--color-secondary);
+  border-bottom: 3px solid var(--color-secondary);
 }
 
 .button {
@@ -98,11 +98,11 @@ h2 {
   text-decoration: none;
   border: 2px solid var(--color);
   color: bg;
-  padding: .5em .1em;
-  border-radius: .25em;
-  
+  padding: 0.5em 0.1em;
+  border-radius: 0.25em;
+
   position: relitave;
-  isolation: isloate;  
+  isolation: isloate;
 }
 
 /* .button::after {
@@ -132,13 +132,14 @@ h2 {
   color: white;
 }
 .card {
-    border: 2px white;
-    border-style: solid;
-    width: 600px;
-    height: 100px;
+  border: 2px white;
+  border-style: solid;
+  width: 600px;
+  height: 100px;
   background: transparent;
   color: inherit;
 }
+
 a {
   color: inherit;
 }

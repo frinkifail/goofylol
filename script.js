@@ -1,4 +1,4 @@
-import { format } from './format.js';
+import { format } from "./format.js";
 // starting data
 let deltatime = 0;
 let player = {
@@ -8,10 +8,10 @@ let player = {
   goofypills: 1,
   longgoofypills: 0,
   susgoofygp: 0,
-  silliness: 0
-}
+  silliness: 0,
+};
 
-window.printPlayerData = () => console.log(player)
+window.printPlayerData = () => console.log(player);
 
 // Teste's Save and Load Functions :3
 function Save() {
@@ -24,48 +24,50 @@ function Load() {
   }
 }
 
-Load()
+Load();
 
-function assignOnclick() { // so we dont have global variables cluttering everything :3
+function assignOnclick() {
+  // so we dont have global variables cluttering everything :3
   const goofypillsbutton = document.getElementById("goofypills");
-  goofypillsbutton.onclick = () => BuyGoof(1,false);
+  goofypillsbutton.onclick = () => BuyGoof(1, false);
 
   const longergoofypillsbutton = document.getElementById("longergoofypills");
-  longergoofypillsbutton.onclick = () => BuyGoof(2,false);
+  longergoofypillsbutton.onclick = () => BuyGoof(2, false);
 }
 
 assignOnclick();
-
 
 // shop stuff
 /**
  * x = item id
  * a = update only
-*/
+ */
 function BuyGoof(x, a) {
   const doStuff = (mode) => {
     let price;
     let prefix;
     let data;
-    if (mode == 1) { // x is 1
-      prefix = 'gp';
-      price = ((player.goofypills ** 1.25) * 15);
+    if (mode == 1) {
+      // x is 1
+      prefix = "gp";
+      price = player.goofypills ** 1.25 * 15;
       data = player.goofypills;
     } else if (mode == 2) {
-      prefix = 'lgp';
-      price = (((player.longgoofypills + 1) ** 1.35) * 1000);
-      data = player.longgoofypills
+      prefix = "lgp";
+      price = (player.longgoofypills + 1) ** 1.35 * 1000;
+      data = player.longgoofypills;
     } else {
       price = null;
-      prefix = ''
+      prefix = "";
     }
     // console.debug(prefix)
     document.getElementById(`${prefix}cost`).textContent = format(price);
     document.getElementById(`${prefix}amount`).textContent = data;
     return price;
-  }
-  
-  if (x == 1 || a) { // slight reformat vvvvvv
+  };
+
+  if (x == 1 || a) {
+    // slight reformat vvvvvv
     // DONE: maybe reformat this in the future
     // console.log(x)
     const price = doStuff(1);
@@ -84,31 +86,38 @@ function BuyGoof(x, a) {
 }
 
 // main loop
-var timesincelastsave = 0
-player.lastTick = Date.now()
+var timesincelastsave = 0;
+player.lastTick = Date.now();
 setInterval(() => {
   // deltatime
-  deltatime = (Date.now() - player.lastTick)/1000
-  player.lastTick = Date.now()
-  
+  deltatime = (Date.now() - player.lastTick) / 1000;
+  player.lastTick = Date.now();
+
   // point gain
-  let pntsps = (player.pointspersec + player.goofypills)
-  player.points += deltatime * (player.pointspersec + player.goofypills)
-  
+  let pntsps = player.pointspersec + player.goofypills;
+  player.points += deltatime * (player.pointspersec + player.goofypills);
+
   // pps gain
-  let bonuspps = (((1.0001**((Math.log10(player.points < 1 ? 1 : player.points))-1))/25) * 0)
-  player.pointspersec += deltatime * (bonuspps + (player.longgoofypills/125))
-  
+  let bonuspps =
+    (1.001 ** (Math.log10(player.points < 1 ? 1 : player.points) - 1) / 25) *
+    0;
+  player.pointspersec += deltatime * (bonuspps + player.longgoofypills / 125);
+
   // showing
-  document.getElementById("deltatime").textContent = Math.round(1/deltatime)
-  document.getElementById("points").textContent = format(player.points)
-  document.getElementById("pps").textContent = format(pntsps)
-  document.getElementById("usablepps").textContent = format(player.pointspersec)
-  BuyGoof(0,true)
-  
+  document.getElementById("deltatime").textContent = Math.round(1 / deltatime);
+  document.getElementById("points").textContent = format(player.points);
+  document.getElementById("pps").textContent = format(pntsps);
+  document.getElementById("usablepps").textContent = format(
+    player.pointspersec
+  );
+  BuyGoof(0, true);
+
   // saving
-  timesincelastsave += deltatime
-  if (timesincelastsave >= 20){Save(); timesincelastsave = 0}
+  timesincelastsave += deltatime;
+  if (timesincelastsave >= 20) {
+    Save();
+    timesincelastsave = 0;
+  }
   // read only player watch / which is apparently not readonly
   window.player = player;
-},1000/100)
+}, 1000 / 100);
