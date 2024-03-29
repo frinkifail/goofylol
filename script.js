@@ -8,6 +8,26 @@ var player = {
   susgoofygp: 0,
   silliness: 0
 }
+function format(x){
+  if (0.1 > x){
+    return "1/"+(x**-1).tofixed(2)
+  }
+  if (0.1 < x || x < 1000){
+    return x.tofixed(2)
+  }
+  if (1000 >= x || x >= 100000){
+  return x.toFixed(1)
+  }
+  if (100000 >= x || x >= 1000000){
+    return x.toFixed(0)
+  }
+  if (x > 1000000){
+    let log10x = Math.log10(x) 
+    let xoverl10x = x/(10**log10x)
+    if (xoverl10x >= 10){return (xoverl10x/10).toFixed(2)+"e"+(log10x+1).toFixed(0)}
+    else {return xoverl10x.toFixed(2)+"e"+log10x.toFixed(0)}
+  }
+}
 function BuyGoof(x,a){
   if (x == 1 || a){
     var price = ((player.goofypills**1.25)*15).toFixed(1)
