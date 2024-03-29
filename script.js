@@ -44,30 +44,35 @@ function BuyGoof(x, a) {
   const doStuff = (mode) => {
     let price;
     let prefix;
-    if (mode === true) { // x is 1
+    let data;
+    if (mode == 1) { // x is 1
       prefix = 'gp';
       price = ((player.goofypills ** 1.25) * 15);
-      document.getElementById("gpcost").innerHTML = format(price);
-      document.getElementById("gpamount").innerHTML = player.goofypills;
-    } else {
+      data = player.goofypills;
+    } else if (mode == 2) {
       prefix = 'lgp';
       price = (((player.longgoofypills + 1) ** 1.35) * 1000);
-      document.getElementById("lgpcost").innerHTML = format(price);
-      document.getElementById("lgpamount").innerHTML = player.longgoofypills;
+    } else {
+      price = null;
+      prefix = ''
     }
+    // console.debug(prefix)
+    document.getElementById(`${prefix}cost`).innerHTML = format(price);
+    document.getElementById(`${prefix}amount`).innerHTML = data;
     return price;
   }
-  // tf is this
+  
   if (x == 1 || a) { // slight reformat vvvvvv
-    // TODO: maybe reformat this in the future
-    
+    // DONE: maybe reformat this in the future
+    // console.log(x)
+    const price = doStuff(1);
     if (player.points >= price && !a) {
       player.points -= price;
       player.goofypills += 1;
     }
   }
-  if (x == 2 || a) {
-    const 
+  else if (x == 2 || a) {
+    const price = doStuff(2);
     if (player.points >= price && !a) {
       player.points -= price;
       player.longgoofypills += 1;
