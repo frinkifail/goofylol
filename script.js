@@ -13,13 +13,13 @@ function format(x){
   if (0.1 > x){
     return "1/"+(x**-1).toFixed(2)
   }
-  else if(0.1 <= x || x < 1000){
+  else if(0.1 <= x < 1000){
     return x.toFixed(2)
   }
-  else if (x >= 1000 || x < 100000){
+  else if (1000 <= x < 100000){
     return x.toFixed(1)
   }
-  else if (x >= 100000 || x < 1000000){
+  else if (100000 <= x < 1000000){
     return x.toFixed(0)
   }
   else if (x >= 1000000){
