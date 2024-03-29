@@ -13,13 +13,13 @@ function format(x){
   if (0.1 > x){
     return "1/"+(x**-1).toFixed(2)
   }
-  else if(0.1 <= x < 1000){
+  else if(x < 1000){
     return x.toFixed(2)
   }
-  else if (1000 <= x < 100000){
+  else if (x < 100000){
     return x.toFixed(1)
   }
-  else if (100000 <= x < 1000000){
+  else if (x < 1000000){
     return x.toFixed(0)
   }
   else if (x >= 1000000){
@@ -38,6 +38,13 @@ function BuyGoof(x,a){
     var price = ((player.goofypills**1.25)*15)
     document.getElementById("gpcost").innerHTML = format(price)
     document.getElementById("gpamount").innerHTML = player.goofypills
+    if (player.points >= price && !a){
+      player.points -= price
+      player.goofypills+=1
+    }
+  }
+  if (x == 2){
+    var price = (((player.longgoofypills+1)**1.35)*1000)
     if (player.points >= price && !a){
       player.points -= price
       player.goofypills+=1
