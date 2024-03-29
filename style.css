@@ -130,9 +130,6 @@ h2 {
 .button:hover {
   transform: scale(var(--scale-factor));
 }
-#sillybutton:hover {
-  transform: scale(var(--scale-factor));
-}
 
 .hero {
   background-color: #074f57;
