@@ -1,8 +1,15 @@
-
+:root {
+/*  put css vars here  */
+  --color-bg: #1b1b1b;
+  --color-fg: #fefefe;
+  --accent: aquamarine;
+  --scale-factor: 120%;
+}
 
 body {
-  font-family: 'SF Mono' 'Roboto Mono' 'Oxygen Mono' monospace;
+  font-family: 'SF Mono', 'Roboto Mono', 'Oxygen Mono', monospace;
   background-color: var(--color-bg);
+  color: var(--color-fg);
 }
 
 /* Page structure */
@@ -57,7 +64,7 @@ input {
 
 /* Subheading */
 h2 {
-  color: #2800FF;
+  color: var(--accent);
 }
 
 /* Interactive image */
@@ -87,10 +94,10 @@ h2 {
 .button {
   --color: hsl(208, 72%, 39%);
   display: inline-block;
-  cursor: pointer;
+  cursor: default;
   text-decoration: none;
   border: 2px solid var(--color);
-  color: bg; 
+  color: bg;
   padding: .5em .1em;
   border-radius: .25em;
   
@@ -98,7 +105,7 @@ h2 {
   isolation: isloate;  
 }
 
-.button::after {
+/* .button::after {
   content : '';
   position: absolute;
   z-index: -1;
@@ -114,6 +121,10 @@ h2 {
 .button:focus-visible::after {
   transform-origin: left;
   scale: 1 1;
+} */
+
+.button:hover {
+  transform: scale(var(--scale-factor));
 }
 
 .hero {
@@ -121,8 +132,13 @@ h2 {
   color: white;
 }
 .card {
-    border: 2px;
+    border: 2px white;
     border-style: solid;
     width: 600px;
     height: 100px;
+  background: transparent;
+  color: inherit;
+}
+a {
+  color: inherit;
 }
