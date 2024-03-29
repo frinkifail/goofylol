@@ -71,7 +71,7 @@ setInterval(() => {
   document.getElementById("deltatime").innerHTML = Math.round(1/deltatime)
   player.points += deltatime * (player.pointspersec + player.goofypills)
   let bonuspps = (((1.0001**((Math.log10(player.points < 1 ? 1 : player.points))-1))/25) * 0)
-  player.pointspersec += deltatime * (bonuspps + (player.longgoofypills/45))
+  player.pointspersec += deltatime * (bonuspps + (player.longgoofypills/125))
   let pntsps = (player.pointspersec + player.goofypills)
   document.getElementById("points").innerHTML = format(player.points)
   document.getElementById("pps").innerHTML = format(pntsps)
@@ -79,5 +79,3 @@ setInterval(() => {
   timesincelastsave += deltatime
   if (timesincelastsave >= 20){Save(); timesincelastsave = 0}
 },1000/100)
-// am bacc
-//what you do?
