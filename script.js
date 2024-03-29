@@ -103,6 +103,7 @@ setInterval(() => {
   document.getElementById("deltatime").textContent = Math.round(1/deltatime)
   document.getElementById("points").textContent = format(player.points)
   document.getElementById("pps").textContent = format(pntsps)
+  document.getElementById("usablepps").textContent = format(player.pointspersec)
   BuyGoof(0,true)
   
   // saving
