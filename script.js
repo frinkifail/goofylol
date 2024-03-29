@@ -1,3 +1,5 @@
+import {format} from './format.js'
+// starting data
 var deltatime = 0
 var lasttime = 0
 var player = {
@@ -18,30 +20,7 @@ var data = JSON.parse(atob(localStorage.getItem("goofyahhgame-save")))
 for (const i in data) player[i] = data[i]}}
 Load()
 
-function format(x){
-  if (0.1 > x){
-    return "1/"+(x**-1).toFixed(2)
-  }
-  else if(x < 1000){
-    return x.toFixed(2)
-  }
-  else if (x < 100000){
-    return x.toFixed(1)
-  }
-  else if (x < 1000000){
-    return x.toFixed(0)
-  }
-  else if (x >= 1000000){
-    let log10x = Math.floor(Math.log10(x))
-    let xoverl10x = x/(10**log10x)
-    if (xoverl10x >= 10){
-      return ((xoverl10x/10).toFixed(2)+"e"+((log10x+1)))
-    }
-    else {
-      return ((xoverl10x).toFixed(2)+"e"+((log10x)))
-    }
-  }
-}
+//shop stuff
 function BuyGoof(x,a){
   if (x == 1 || a){
     var price = ((player.goofypills**1.25)*15)
@@ -63,19 +42,29 @@ function BuyGoof(x,a){
   }
 }
 
+// main loop
 var timesincelastsave = 0
 player.lastTick = Date.now()
 setInterval(() => {
+  //deltatime
   deltatime = (Date.now() - player.lastTick)/1000
   player.lastTick = Date.now()
-  document.getElementById("deltatime").innerHTML = Math.round(1/deltatime)
+  
+  //point gain
+  let pntsps = (player.pointspersec + player.goofypills)
   player.points += deltatime * (player.pointspersec + player.goofypills)
+  
+  //pps gain
   let bonuspps = (((1.0001**((Math.log10(player.points < 1 ? 1 : player.points))-1))/25) * 0)
   player.pointspersec += deltatime * (bonuspps + (player.longgoofypills/125))
-  let pntsps = (player.pointspersec + player.goofypills)
+  
+  //showing
+  document.getElementById("deltatime").innerHTML = Math.round(1/deltatime)
   document.getElementById("points").innerHTML = format(player.points)
   document.getElementById("pps").innerHTML = format(pntsps)
   BuyGoof(1,true)
+  
+  //saving
   timesincelastsave += deltatime
   if (timesincelastsave >= 20){Save(); timesincelastsave = 0}
 },1000/100)
