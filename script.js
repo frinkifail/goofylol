@@ -1,8 +1,7 @@
-import {format} from './format.js'
+import { format } from './format.js';
 // starting data
-var deltatime = 0
-var lasttime = 0
-var player = {
+let deltatime = 0;
+let player = {
   lastTick: Date.now(),
   points: 0,
   pointspersec: 0,
@@ -12,14 +11,14 @@ var player = {
   silliness: 0
 }
 
-//Teste's Save and Load Functions :3
+// Teste's Save and Load Functions :3
 function Save() {
   localStorage.setItem("goofyahhgame-save", btoa(JSON.stringify(player)));
 }
 function Load() {
   if (localStorage.getItem("goofyahhgame-save") != null) {
-    const data = JSON.parse(atob(localStorage.getItem("goofyahhgame-save")))
-    for (const i in data) player[i] = data[i] // cant we do player = data?
+    const data = JSON.parse(atob(localStorage.getItem("goofyahhgame-save")));
+    for (const i in data) player[i] = data[i]; // NOTE: this exists to support old saves
   }
 }
 
@@ -27,38 +26,51 @@ Load()
 
 function assignOnclick() { // so we dont have global variables cluttering everything :3
   const goofypillsbutton = document.getElementById("goofypills");
-  goofypillsbutton.onclick = () => BuyGoof(1,false)
+  goofypillsbutton.onclick = () => BuyGoof(1,false);
 
   const longergoofypillsbutton = document.getElementById("longergoofypills");
-  longergoofypillsbutton.onclick = () => BuyGoof(2,false)
+  longergoofypillsbutton.onclick = () => BuyGoof(2,false);
 }
+
 assignOnclick();
 
 
-
-//shop stuff
+// shop stuff
 /**
  * x = item id
  * a = update only
 */
-function BuyGoof(x, a) { // i hate messy code for some reason
-  if (x == 1 || a) {
+function BuyGoof(x, a) {
+  const doStuff = (mode) => {
+    let price;
+    let prefix;
+    if (mode === true) { // x is 1
+      prefix = 'gp';
+      price = ((player.goofypills ** 1.25) * 15);
+      document.getElementById("gpcost").innerHTML = format(price);
+      document.getElementById("gpamount").innerHTML = player.goofypills;
+    } else {
+      prefix = 'lgp';
+      price = (((player.longgoofypills + 1) ** 1.35) * 1000);
+      document.getElementById("lgpcost").innerHTML = format(price);
+      document.getElementById("lgpamount").innerHTML = player.longgoofypills;
+    }
+    return price;
+  }
+  // tf is this
+  if (x == 1 || a) { // slight reformat vvvvvv
     // TODO: maybe reformat this in the future
-    var price = ((player.goofypills ** 1.25) * 15)
-    document.getElementById("gpcost").innerHTML = format(price)
-    document.getElementById("gpamount").innerHTML = player.goofypills
-    if (player.points >= price && !a){
-      player.points -= price
-      player.goofypills += 1
+    
+    if (player.points >= price && !a) {
+      player.points -= price;
+      player.goofypills += 1;
     }
   }
   if (x == 2 || a) {
-    var price = (((player.longgoofypills + 1) ** 1.35) * 1000)
-    document.getElementById("lgpcost").innerHTML = format(price)
-    document.getElementById("lgpamount").innerHTML = player.longgoofypills
-    if (player.points >= price && !a){
-      player.points -= price
-      player.longgoofypills += 1
+    const 
+    if (player.points >= price && !a) {
+      player.points -= price;
+      player.longgoofypills += 1;
     }
   }
 }
@@ -67,25 +79,25 @@ function BuyGoof(x, a) { // i hate messy code for some reason
 var timesincelastsave = 0
 player.lastTick = Date.now()
 setInterval(() => {
-  //deltatime
+  // deltatime
   deltatime = (Date.now() - player.lastTick)/1000
   player.lastTick = Date.now()
   
-  //point gain
+  // point gain
   let pntsps = (player.pointspersec + player.goofypills)
   player.points += deltatime * (player.pointspersec + player.goofypills)
   
-  //pps gain
+  // pps gain
   let bonuspps = (((1.0001**((Math.log10(player.points < 1 ? 1 : player.points))-1))/25) * 0)
   player.pointspersec += deltatime * (bonuspps + (player.longgoofypills/125))
   
-  //showing
+  // showing
   document.getElementById("deltatime").innerHTML = Math.round(1/deltatime)
   document.getElementById("points").innerHTML = format(player.points)
   document.getElementById("pps").innerHTML = format(pntsps)
-  BuyGoof(1,true)
+  BuyGoof(0,true)
   
-  //saving
+  // saving
   timesincelastsave += deltatime
   if (timesincelastsave >= 20){Save(); timesincelastsave = 0}
 },1000/100)
