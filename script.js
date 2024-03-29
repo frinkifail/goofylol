@@ -20,6 +20,9 @@ var data = JSON.parse(atob(localStorage.getItem("goofyahhgame-save")))
 for (const i in data) player[i] = data[i]}}
 Load()
 
+const goofypillsbutton = document.querySelector("goofypills");
+goofypillsbutton.addEventListener("click", (event) => {BuyGoof(1,false)});
+
 //shop stuff
 function BuyGoof(x,a){
   if (x == 1 || a){
