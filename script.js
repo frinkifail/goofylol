@@ -33,6 +33,9 @@ function assignOnclick() {
 
   const longergoofypillsbutton = document.getElementById("longergoofypills");
   longergoofypillsbutton.onclick = () => BuyGoof(2, false);
+  
+  const susgoofygreenpowderbutton = document.getElementById("susgoofygreenpowder");
+  susgoofygreenpowderbutton.onclick = () => BuyGoof(3, false);
 }
 
 assignOnclick();
@@ -56,7 +59,11 @@ function BuyGoof(x, a) {
       prefix = "lgp";
       price = (player.longgoofypills + 1) ** 1.35 * 1000;
       data = player.longgoofypills;
-    } else {
+    } else if (mode == 3) {
+      prefix = "sggp";
+      price = (player.susgoofygp + 1) ** 1.4 * 250;
+      data = player.susgoofygp;
+    } else{
       price = null;
       prefix = "";
     }
@@ -83,6 +90,13 @@ function BuyGoof(x, a) {
       player.longgoofypills += 1;
     }
   }
+  if (x == 3 || a){
+    const price = doStuff(3);
+    if (player.pointspersec >= price && !a) {
+      player.pointspersec -= price;
+      player.susgoofygp += 1;
+  }
+}
 }
 
 // main loop
@@ -100,7 +114,7 @@ setInterval(() => {
   // pps gain
   let bonuspps =
     (1.001 ** (Math.log10(player.points < 1 ? 1 : player.points) - 1) / 25) *
-    0;
+    (player.susgoofygp/100);
   player.pointspersec += deltatime * (bonuspps + player.longgoofypills / 125);
 
   // showing
