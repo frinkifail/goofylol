@@ -11,6 +11,8 @@ let player = {
   silliness: 0
 }
 
+window.printPlayerData = () => console.log(player)
+
 // Teste's Save and Load Functions :3
 function Save() {
   localStorage.setItem("goofyahhgame-save", btoa(JSON.stringify(player)));
@@ -52,13 +54,14 @@ function BuyGoof(x, a) {
     } else if (mode == 2) {
       prefix = 'lgp';
       price = (((player.longgoofypills + 1) ** 1.35) * 1000);
+      data = player.longgoofypills
     } else {
       price = null;
       prefix = ''
     }
     // console.debug(prefix)
-    document.getElementById(`${prefix}cost`).innerHTML = format(price);
-    document.getElementById(`${prefix}amount`).innerHTML = data;
+    document.getElementById(`${prefix}cost`).textContent = format(price);
+    document.getElementById(`${prefix}amount`).textContent = data;
     return price;
   }
   
@@ -71,7 +74,7 @@ function BuyGoof(x, a) {
       player.goofypills += 1;
     }
   }
-  else if (x == 2 || a) {
+  if (x == 2 || a) {
     const price = doStuff(2);
     if (player.points >= price && !a) {
       player.points -= price;
@@ -97,12 +100,14 @@ setInterval(() => {
   player.pointspersec += deltatime * (bonuspps + (player.longgoofypills/125))
   
   // showing
-  document.getElementById("deltatime").innerHTML = Math.round(1/deltatime)
-  document.getElementById("points").innerHTML = format(player.points)
-  document.getElementById("pps").innerHTML = format(pntsps)
+  document.getElementById("deltatime").textContent = Math.round(1/deltatime)
+  document.getElementById("points").textContent = format(player.points)
+  document.getElementById("pps").textContent = format(pntsps)
   BuyGoof(0,true)
   
   // saving
   timesincelastsave += deltatime
   if (timesincelastsave >= 20){Save(); timesincelastsave = 0}
+  // read only player watch / which is apparently not readonly
+  window.player = player;
 },1000/100)
