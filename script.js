@@ -38,8 +38,10 @@ function assignOnclick() {
   susgoofygreenpowderbutton.onclick = () => BuyGoof(3, false);
   
   const tabgoof = document.getElementById("goofbutton");
+  tabgoof.onclick = () => SetTab(0)
   
   const tabsilly = document.getElementById("sillybutton");
+  tabsilly.onclick = () => SetTab(1)
 }
 
 assignOnclick();
@@ -49,8 +51,8 @@ function SetTab(tabId){
     document.getElementById("gooftab").style.display = "inline";
   } else {document.getElementById("gooftab").style.display = "none";}
   if (tabId == 1){
-    document.getElementById("void").style.display = "inline";
-  }
+    document.getElementById("sillytab").style.display = "inline";
+  } else {document.getElementById("sillytab").style.display = "none";}
 }
 
 // shop stuff
