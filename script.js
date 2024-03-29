@@ -61,7 +61,7 @@ function BuyGoof(x, a) {
       data = player.longgoofypills;
     } else if (mode == 3) {
       prefix = "sggp";
-      price = (player.susgoofygp + 1) ** 1.4 * 250;
+      price = (player.susgoofygp + 1) ** 1.25 * 250;
       data = player.susgoofygp;
     } else{
       price = null;
