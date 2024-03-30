@@ -9,7 +9,7 @@ declare global {
 
 // starting data
 let deltaTime = 0;
-let player = {
+const player = {
 	lastTick: Date.now(),
 	points: 0,
 	pointsPerSec: 0,
@@ -22,9 +22,7 @@ let player = {
 window.printPlayerData = () => console.log(player);
 
 // Teste's Save and Load Functions :3
-function save() {
-	localStorage.setItem("goofyahhgame-save", btoa(JSON.stringify(player)));
-}
+const save = () => localStorage.setItem("goofyahhgame-save", btoa(JSON.stringify(player)));
 function load() {
 	const item = localStorage.getItem("goofyahhgame-save")
 	if (item !== null) {
@@ -36,7 +34,7 @@ function load() {
 load();
 
 function assignOnclick() {
-	// so we dont have global variables cluttering everything :3
+	// upgrades
 	document.getElementById("goofypills")!.onclick = () => buyGoof(1, false);
 	document.getElementById("longergoofypills")!.onclick = () => buyGoof(2, false);
 	document.getElementById("susgoofygreenpowder")!.onclick = () => buyGoof(3, false);
@@ -59,14 +57,15 @@ function setTab(tabId: number) {
 	for (const i in TABS) {
 		document.getElementById(TABS[i] + 'tab')!.style.display = 'none';
 	}
+	document.getElementById(tab + 'tab')!.style.display = 'block';
 }
 
 // shop stuff
 function buyGoof(itemId: number, updateOnly?: boolean) {
 	const doStuff = (mode: number) => {
-		let price;
-		let prefix;
-		let data;
+		let price: number;
+		let prefix: string;
+		let data: any;
 		if (mode == 1) {
 			// x is 1
 			prefix = "gp";
@@ -81,7 +80,7 @@ function buyGoof(itemId: number, updateOnly?: boolean) {
 			price = (player.susGoofyGP + 1) ** 1.135 * 250;
 			data = player.susGoofyGP;
 		} else {
-			price = null;
+			price = 0;
 			prefix = "";
 		}
 		// console.debug(prefix)
@@ -147,6 +146,4 @@ setInterval(() => {
 		save();
 		timeSinceLastSave = 0;
 	}
-	// read only player watch / which is apparently not readonly
-	window.player = player;
 }, 1000 / 100);
