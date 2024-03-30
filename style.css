@@ -11,6 +11,7 @@ body {
 	font-family: "SF Mono", "Space Mono", "Roboto Mono", "Oxygen Mono", monospace;
 	background-color: var(--color-bg);
 	color: var(--color-fg);
+	text-align: center;
 }
 
 /* Page structure */
